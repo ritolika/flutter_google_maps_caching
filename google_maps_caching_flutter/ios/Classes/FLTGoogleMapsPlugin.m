@@ -19,9 +19,9 @@
       cache = [[NSMutableDictionary alloc] init];
       CGFloat screenScale = [[UIScreen mainScreen] scale];
       for (id key in bitmaps) {
-        FlutterStandardTypedData* value = [bitmaps objectForKey:key];
-        UIImage* cacheimage = [UIImage imageWithData:[value data] scale:screenScale];
-        [cache setObject:cacheimage forKey:key]; 
+        //FlutterStandardTypedData* value = [bitmaps objectForKey:key];
+        //UIImage* cacheimage = [UIImage imageWithData:[value data] scale:screenScale];
+        //[cache setObject:cacheimage forKey:key]; 
       }
     } 
   }
