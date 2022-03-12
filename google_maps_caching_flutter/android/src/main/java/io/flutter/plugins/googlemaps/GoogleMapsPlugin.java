@@ -100,13 +100,18 @@ public class GoogleMapsPlugin implements FlutterPlugin, ActivityAware {
           HashMap<Integer, byte[]> bitmaps = methodCall.argument("bitmapByIndex");
 
           CACHED_BITMAPS.clear();
-          Bitmap bitmap;
-          for (Entry<Integer, byte[]> entry : bitmaps.entrySet()) {
-            bitmap = BitmapFactory.decodeByteArray(entry.getValue(), 0, entry.getValue().length);
-            CACHED_BITMAPS.put(entry.getKey(), BitmapDescriptorFactory.fromBitmap(bitmap));
-          }
-          Log.i("GoogleMapsFlutterCaching", CACHED_BITMAPS.size() + " bitmaps indexed.");
-          result.success(null);
+
+          new Thread(() -> {
+            Bitmap bitmap;
+            for (Entry<Integer, byte[]> entry : bitmaps.entrySet()) {
+              bitmap = BitmapFactory.decodeByteArray(entry.getValue(), 0, entry.getValue().length);
+              CACHED_BITMAPS.put(entry.getKey(), BitmapDescriptorFactory.fromBitmap(bitmap));
+            }
+            Log.i("GoogleMapsFlutterCaching", CACHED_BITMAPS.size() + " bitmaps indexed.");
+            result.success(null);
+          }).start();
+
+          
         }
       }
 
