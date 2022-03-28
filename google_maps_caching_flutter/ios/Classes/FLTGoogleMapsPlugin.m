@@ -56,9 +56,9 @@
         NSArray* flatBufferPaths = call.arguments[@"flatBufferPaths"];
         for(NSString* flatBufferPath in flatBufferPaths) {
           NSError* error = nil;
-          NSData* data = [NSData dataWithContentsOfFile:path  options:0 error:&error];
+          NSData* data = [NSData dataWithContentsOfFile:flatBufferPaths  options:0 error:&error];
           WiseInventServerApiMobileClientFlatBufferModelSchema* schema = [WiseInventServerApiMobileClientFlatBufferModelSchema getRootAs:data];
-          NSLog(@"[GoogleMapsFlutterCaching] %d bitmaps found in FlatBuffer table.", [schema count]);
+          NSLog(@"[GoogleMapsFlutterCaching] %lu bitmaps found in FlatBuffer table.", [schema.Frames count]);
         }
         result(@[ @(YES) ]);
       } else {
