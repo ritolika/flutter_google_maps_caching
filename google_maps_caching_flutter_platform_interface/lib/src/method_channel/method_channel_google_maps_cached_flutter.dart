@@ -14,4 +14,11 @@ class MethodChannelGoogleMapsCachedFlutter
     return staticChannel.invokeMethod<void>('map#setCachedBitmaps',
         <String, Object>{"bitmapByIndex": bitmapByIndex});
   }
+
+  Future<void> setCachedBitmapsFromFlatBufferPaths(
+      List<String> flatBufferPaths) {
+    return staticChannel.invokeMethod<void>(
+        'map#setCachedBitmapsFromFlatBufferPaths',
+        <String, Object>{"flatBufferPaths": flatBufferPaths});
+  }
 }

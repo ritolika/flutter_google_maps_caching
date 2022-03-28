@@ -7,4 +7,12 @@ class GoogleMapsCache {
     return GoogleMapsCachedFlutterPlatform.instance
         .setCachedBitmaps(bitmapByIndex);
   }
+
+  static Future<void> setCachedBitmapsFromFlatBufferPaths(
+      List<String> flatBufferPaths) {
+    assert(flatBufferPaths != null);
+
+    return GoogleMapsCachedFlutterPlatform.instance
+        .setCachedBitmapsFromFlatBufferPaths(flatBufferPaths);
+  }
 }

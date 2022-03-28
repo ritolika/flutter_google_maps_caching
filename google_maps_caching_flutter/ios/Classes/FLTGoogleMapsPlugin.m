@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 #import "FLTGoogleMapsPlugin.h"
+#import "WiseInventServerApiMobileClientFlatBufferModelSchema.h"
 
 #pragma mark - GoogleMaps plugin implementation
 
@@ -50,6 +51,15 @@
         NSDictionary* bitmaps = call.arguments[@"bitmapByIndex"];
         [FLTGoogleMapsCache setCache:bitmaps];
         NSLog(@"[GoogleMapsFlutterCaching] %lu bitmaps indexed.", FLTGoogleMapsCache.cache.count);
+        result(@[ @(YES) ]);
+      } else if([call.method isEqualToString:@"map#setCachedBitmapsFromFlatBufferPaths"]) {
+        NSArray* flatBufferPaths = call.arguments[@"flatBufferPaths"];
+        for(NSString* flatBufferPath in flatBufferPaths) {
+          NSError* error = nil;
+          NSData* data = [NSData dataWithContentsOfFile:path  options:0 error:&error];
+          WiseInventServerApiMobileClientFlatBufferModelSchema* schema = [WiseInventServerApiMobileClientFlatBufferModelSchema getRootAs:data];
+          NSLog(@"[GoogleMapsFlutterCaching] %d bitmaps found in FlatBuffer table.", [schema count]);
+        }
         result(@[ @(YES) ]);
       } else {
         result(FlutterMethodNotImplemented);
