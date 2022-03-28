@@ -26,7 +26,7 @@ dependencies:
     git:
       url: git://github.com/ritolika/flutter_google_maps_caching.git
       path: google_maps_caching_flutter_platform_interface
-      ref: master
+      ref: FlatBuffer
 
 dev_dependencies:
   flutter_test:
