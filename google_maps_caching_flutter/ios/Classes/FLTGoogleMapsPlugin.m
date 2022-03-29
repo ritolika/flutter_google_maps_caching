@@ -62,18 +62,25 @@
         for(NSString* flatBufferPath in flatBufferPaths) {
           NSError* error = nil;
           NSData* data = [NSData dataWithContentsOfFile:flatBufferPath  options:0 error:&error];
-          WiseInventServerApiMobileClientFlatBufferModelSchema* schema = [WiseInventServerApiMobileClientFlatBufferModelSchema getRootAs:data];
-          for(WiseInventServerApiMobileClientFlatBufferModelFrame* frame in schema.Frames) {
+          WiseInventServerApi_MobileClient_FlatBuffer_ModelSchema* schema = [WiseInventServerApi_MobileClient_FlatBuffer_ModelSchema getRootAsModelSchema:data];
+
+          for(int i = 0; i < [schema FramesCount]; i++) {
+            WiseInventServerApi_MobileClient_FlatBuffer_ModelFrame* frame = [schema Frames index:i ];
+            [cacheDict setObject:[NSData dataWithBytes:[frame Image]] forKey:[NSNumber numberWithInteger:index]];
+
+          }
+
+          /*for(WiseInventServerApi_MobileClient_FlatBuffer_ModelFrame* frame in schema.Frames) {
             //FBMutableArray<NSNumber *> * image = frame.Image;
             //NSMutableData *data = [[NSMutableData alloc] initWithCapacity: [image count]];
-            /*for(NSNumber *number in image) {
+            for(NSNumber *number in image) {
                 char byte = [number charValue];
               [data appendBytes:&byte length:1];
-            }*/
+            }
             //NSData* payload = [NSData dataWithBytes:&image length:image.count];
             [cacheDict setObject:[frame getByteBuffer] forKey:[NSNumber numberWithInteger:index]];
             index = index + 1;
-          }
+          }*/
         }
         [FLTGoogleMapsCache setCache:cacheDict];
         NSLog(@"[GoogleMapsFlutterCaching] %lu bitmaps indexed.", FLTGoogleMapsCache.cache.count);
