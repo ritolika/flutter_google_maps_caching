@@ -14,11 +14,12 @@ Downloaded by pub (not CocoaPods).
   s.author           = { 'Flutter Dev Team' => 'flutter-dev@googlegroups.com' }
   s.source           = { :http => 'https://github.com/ritolika/flutter_google_maps_caching/tree/master/google_maps_caching_flutter' }
   s.documentation_url = 'https://pub.dev/packages/google_maps_flutter'
-  s.source_files = 'Classes/**/*'
+  s.source_files = 'Classes/**/*.{swift,h,m}'
   s.public_header_files = 'Classes/**/*.h'
   s.dependency 'Flutter'
   s.dependency 'GoogleMaps'
   s.dependency 'FlatBuffers-ObjC'
+  s.dependency 'FlatBuffers'
   s.static_framework = true
   s.platform = :ios, '8.0'
   # GoogleMaps does not support arm64 simulators.
