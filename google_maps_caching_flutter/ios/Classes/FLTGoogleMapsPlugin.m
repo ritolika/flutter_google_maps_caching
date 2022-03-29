@@ -20,8 +20,8 @@
       cache = [[NSMutableDictionary alloc] init];
       CGFloat screenScale = [[UIScreen mainScreen] scale];
       for (id key in bitmaps) {
-        FlutterStandardTypedData* value = [bitmaps objectForKey:key];
-        UIImage* cacheimage = [UIImage imageWithData:[value data] scale:screenScale];
+        NSData* value = [bitmaps objectForKey:key];
+        UIImage* cacheimage = [UIImage imageWithData:value scale:screenScale];
         [cache setObject:cacheimage forKey:key]; 
       }
     } 
@@ -55,18 +55,20 @@
       } else if([call.method isEqualToString:@"map#setCachedBitmapsFromFlatBufferPaths"]) {
         NSArray* flatBufferPaths = call.arguments[@"flatBufferPaths"];
         int index = 0;
-        NSMutableDictionary* cacheDict = [NSMutableDictionary NSMutableDictionary new];
+        NSMutableDictionary* cacheDict = [NSMutableDictionary new];
         for(NSString* flatBufferPath in flatBufferPaths) {
           NSError* error = nil;
           NSData* data = [NSData dataWithContentsOfFile:flatBufferPath  options:0 error:&error];
           WiseInventServerApiMobileClientFlatBufferModelSchema* schema = [WiseInventServerApiMobileClientFlatBufferModelSchema getRootAs:data];
           for(WiseInventServerApiMobileClientFlatBufferModelFrame* frame in schema.Frames) {
-            FBMutableArray<NSNumber *> * image = frame.Image;
-            NSMutableData *data = [[NSMutableData alloc] initWithCapacity: [image count]];
-            for(NSNumber *number in image) {
-              [data appendBytes: &number length: 1];
-            }
-            [cacheDict setObject:data forKey:[NSNumber numberWithInteger:index]];
+            //FBMutableArray<NSNumber *> * image = frame.Image;
+            //NSMutableData *data = [[NSMutableData alloc] initWithCapacity: [image count]];
+            /*for(NSNumber *number in image) {
+                char byte = [number charValue];
+              [data appendBytes:&byte length:1];
+            }*/
+            //NSData* payload = [NSData dataWithBytes:&image length:image.count];
+            [cacheDict setObject:[frame getByteBuffer] forKey:[NSNumber numberWithInteger:index]];
             index = index + 1;
           }
         }

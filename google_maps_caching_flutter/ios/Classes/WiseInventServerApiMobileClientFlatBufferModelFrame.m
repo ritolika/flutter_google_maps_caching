@@ -4,33 +4,17 @@
 
 @implementation WiseInventServerApiMobileClientFlatBufferModelFrame 
 
-- (NSString *) Name {
+- (FBMutableArray<NSNumber *> *) Frame {
 
-    _Name = [self fb_getString:4 origin:_Name];
+    _Frame = [self fb_getNumbers:4 origin:_Frame type:FBNumberUint8];
 
-    return _Name;
-
-}
-
-- (void) add_Name {
-
-    [self fb_addString:_Name voffset:4 offset:4];
-
-    return ;
+    return _Frame;
 
 }
 
-- (FBMutableArray<NSNumber *> *) Image {
+- (void) add_Frame {
 
-    _Image = [self fb_getNumbers:6 origin:_Image type:FBNumberInt8];
-
-    return _Image;
-
-}
-
-- (void) add_Image {
-
-    [self fb_addNumbers:_Image voffset:6 offset:8 type:FBNumberInt8];
+    [self fb_addNumbers:_Frame voffset:4 offset:4 type:FBNumberUint8];
 
     return ;
 
@@ -40,19 +24,19 @@
 
     if (self = [super init]) {
 
-        bb_pos = 14;
+        bb_pos = 12;
 
-        origin_size = 12+bb_pos;
+        origin_size = 8+bb_pos;
 
         bb = [[FBMutableData alloc]initWithLength:origin_size];
 
         [bb setInt32:bb_pos offset:0];
 
-        [bb setInt32:8 offset:bb_pos];
+        [bb setInt32:6 offset:bb_pos];
 
-        [bb setInt16:8 offset:bb_pos-[bb getInt32:bb_pos]];
+        [bb setInt16:6 offset:bb_pos-[bb getInt32:bb_pos]];
 
-        [bb setInt16:12 offset:bb_pos-[bb getInt32:bb_pos]+2];
+        [bb setInt16:8 offset:bb_pos-[bb getInt32:bb_pos]+2];
 
     }
 

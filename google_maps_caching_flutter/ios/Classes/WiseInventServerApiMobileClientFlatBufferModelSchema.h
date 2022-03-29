@@ -6,6 +6,8 @@
 
 @interface WiseInventServerApiMobileClientFlatBufferModelSchema : FBTable 
 
+@property (nonatomic, strong)NSString *Names;
+
 @property (nonatomic, strong)FBMutableArray<WiseInventServerApiMobileClientFlatBufferModelFrame *> *Frames;
 
 @end
