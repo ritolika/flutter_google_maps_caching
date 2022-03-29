@@ -4,6 +4,7 @@
 
 #import "FLTGoogleMapsPlugin.h"
 #import "WiseInventServerApiMobileClientFlatBufferModelSchema.h"
+#import <google_maps_caching_flutter/google_maps_caching_flutter-Swift.h>
 
 #pragma mark - GoogleMaps plugin implementation
 
@@ -40,6 +41,8 @@
                                 withId:@"plugins.flutter.io/google_maps"
       gestureRecognizersBlockingPolicy:
           FlutterPlatformViewGestureRecognizersBlockingPolicyWaitUntilTouchesEnded];
+
+  NSLog(@"%@", [[SwiftTestClass new] description]);
 
   NSString* channelName =
         @"plugins.flutter.io/google_maps_static";
