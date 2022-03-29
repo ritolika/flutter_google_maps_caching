@@ -4,9 +4,9 @@
 
 @implementation WiseInventServerApiMobileClientFlatBufferModelSchema 
 
-- (NSString *) Names {
+- (FBMutableArray<NSString *> *) Names {
 
-    _Names = [self fb_getString:4 origin:_Names];
+    _Names = [self fb_getStrings:4 origin:_Names];
 
     return _Names;
 
@@ -14,7 +14,7 @@
 
 - (void) add_Names {
 
-    [self fb_addString:_Names voffset:4 offset:4];
+    [self fb_addStrings:_Names voffset:4 offset:4];
 
     return ;
 
