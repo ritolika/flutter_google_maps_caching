@@ -3,6 +3,32 @@
 // swiftformat:disable all
 
 import FlatBuffers
+import Foundation
+
+@objcMembers public class UtilityMethods: NSObject {
+    @objc public class func byteArrays(path: String) -> [NSData] {
+        do {
+            var arr: Array<NSData> = [];
+            let modelSchema = WiseInventServerApi_MobileClient_FlatBuffer_ModelSchema.getRootAsModelSchema(bb: ByteBuffer(data: try Data(contentsOf: URL(fileURLWithPath: path))));
+            for i in 0...(modelSchema.FramesCount - 1) {
+                let modelFrame = modelSchema.Frames(at: i);
+                arr.append(_: NSData(bytes: modelFrame!.Frame, length: Int(modelFrame!.FrameCount)))
+                
+            }
+            return arr;
+        } catch {
+        
+        }
+        
+        return [];
+    }
+    
+    @objc public class func test(path: String) {
+        
+    }
+    
+
+}
 
 public struct WiseInventServerApi_MobileClient_FlatBuffer_ModelSchema: FlatBufferObject {
 
@@ -16,21 +42,27 @@ public struct WiseInventServerApi_MobileClient_FlatBuffer_ModelSchema: FlatBuffe
   public init(_ bb: ByteBuffer, o: Int32) { _accessor = Table(bb: bb, position: o) }
 
   private enum VTOFFSET: VOffset {
-    case Frames = 4
+    case Names = 4
+    case Frames = 6
     var v: Int32 { Int32(self.rawValue) }
     var p: VOffset { self.rawValue }
   }
 
+  public var NamesCount: Int32 { let o = _accessor.offset(VTOFFSET.Names.v); return o == 0 ? 0 : _accessor.vector(count: o) }
+  public func Names(at index: Int32) -> String? { let o = _accessor.offset(VTOFFSET.Names.v); return o == 0 ? nil : _accessor.directString(at: _accessor.vector(at: o) + index * 4) }
   public var FramesCount: Int32 { let o = _accessor.offset(VTOFFSET.Frames.v); return o == 0 ? 0 : _accessor.vector(count: o) }
   public func Frames(at index: Int32) -> WiseInventServerApi_MobileClient_FlatBuffer_ModelFrame? { let o = _accessor.offset(VTOFFSET.Frames.v); return o == 0 ? nil : WiseInventServerApi_MobileClient_FlatBuffer_ModelFrame(_accessor.bb, o: _accessor.indirect(_accessor.vector(at: o) + index * 4)) }
-  public static func startModelSchema(_ fbb: inout FlatBufferBuilder) -> UOffset { fbb.startTable(with: 1) }
+  public static func startModelSchema(_ fbb: inout FlatBufferBuilder) -> UOffset { fbb.startTable(with: 2) }
+  public static func addVectorOf(Names: Offset, _ fbb: inout FlatBufferBuilder) { fbb.add(offset: Names, at: VTOFFSET.Names.p) }
   public static func addVectorOf(Frames: Offset, _ fbb: inout FlatBufferBuilder) { fbb.add(offset: Frames, at: VTOFFSET.Frames.p) }
   public static func endModelSchema(_ fbb: inout FlatBufferBuilder, start: UOffset) -> Offset { let end = Offset(offset: fbb.endTable(at: start)); return end }
   public static func createModelSchema(
     _ fbb: inout FlatBufferBuilder,
+    NamesVectorOffset Names: Offset = Offset(),
     FramesVectorOffset Frames: Offset = Offset()
   ) -> Offset {
     let __start = WiseInventServerApi_MobileClient_FlatBuffer_ModelSchema.startModelSchema(&fbb)
+    WiseInventServerApi_MobileClient_FlatBuffer_ModelSchema.addVectorOf(Names: Names, &fbb)
     WiseInventServerApi_MobileClient_FlatBuffer_ModelSchema.addVectorOf(Frames: Frames, &fbb)
     return WiseInventServerApi_MobileClient_FlatBuffer_ModelSchema.endModelSchema(&fbb, start: __start)
   }
@@ -48,29 +80,23 @@ public struct WiseInventServerApi_MobileClient_FlatBuffer_ModelFrame: FlatBuffer
   public init(_ bb: ByteBuffer, o: Int32) { _accessor = Table(bb: bb, position: o) }
 
   private enum VTOFFSET: VOffset {
-    case Name = 4
-    case Image = 6
+    case Frame = 4
     var v: Int32 { Int32(self.rawValue) }
     var p: VOffset { self.rawValue }
   }
 
-  public var Name: String? { let o = _accessor.offset(VTOFFSET.Name.v); return o == 0 ? nil : _accessor.string(at: o) }
-  public var NameSegmentArray: [UInt8]? { return _accessor.getVector(at: VTOFFSET.Name.v) }
-  public var ImageCount: Int32 { let o = _accessor.offset(VTOFFSET.Image.v); return o == 0 ? 0 : _accessor.vector(count: o) }
-  public func Image(at index: Int32) -> Int8 { let o = _accessor.offset(VTOFFSET.Image.v); return o == 0 ? 0 : _accessor.directRead(of: Int8.self, offset: _accessor.vector(at: o) + index * 1) }
-  public var Image: [Int8] { return _accessor.getVector(at: VTOFFSET.Image.v) ?? [] }
-  public static func startModelFrame(_ fbb: inout FlatBufferBuilder) -> UOffset { fbb.startTable(with: 2) }
-  public static func add(Name: Offset, _ fbb: inout FlatBufferBuilder) { fbb.add(offset: Name, at: VTOFFSET.Name.p) }
-  public static func addVectorOf(Image: Offset, _ fbb: inout FlatBufferBuilder) { fbb.add(offset: Image, at: VTOFFSET.Image.p) }
+  public var FrameCount: Int32 { let o = _accessor.offset(VTOFFSET.Frame.v); return o == 0 ? 0 : _accessor.vector(count: o) }
+  public func Frame(at index: Int32) -> Int8 { let o = _accessor.offset(VTOFFSET.Frame.v); return o == 0 ? 0 : _accessor.directRead(of: Int8.self, offset: _accessor.vector(at: o) + index * 1) }
+  public var Frame: [Int8] { return _accessor.getVector(at: VTOFFSET.Frame.v) ?? [] }
+  public static func startModelFrame(_ fbb: inout FlatBufferBuilder) -> UOffset { fbb.startTable(with: 1) }
+  public static func addVectorOf(Frame: Offset, _ fbb: inout FlatBufferBuilder) { fbb.add(offset: Frame, at: VTOFFSET.Frame.p) }
   public static func endModelFrame(_ fbb: inout FlatBufferBuilder, start: UOffset) -> Offset { let end = Offset(offset: fbb.endTable(at: start)); return end }
   public static func createModelFrame(
     _ fbb: inout FlatBufferBuilder,
-    NameOffset Name: Offset = Offset(),
-    ImageVectorOffset Image: Offset = Offset()
+    FrameVectorOffset Frame: Offset = Offset()
   ) -> Offset {
     let __start = WiseInventServerApi_MobileClient_FlatBuffer_ModelFrame.startModelFrame(&fbb)
-    WiseInventServerApi_MobileClient_FlatBuffer_ModelFrame.add(Name: Name, &fbb)
-    WiseInventServerApi_MobileClient_FlatBuffer_ModelFrame.addVectorOf(Image: Image, &fbb)
+    WiseInventServerApi_MobileClient_FlatBuffer_ModelFrame.addVectorOf(Frame: Frame, &fbb)
     return WiseInventServerApi_MobileClient_FlatBuffer_ModelFrame.endModelFrame(&fbb, start: __start)
   }
 }

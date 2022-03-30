@@ -60,14 +60,13 @@
         int index = 0;
         NSMutableDictionary* cacheDict = [NSMutableDictionary new];
         for(NSString* flatBufferPath in flatBufferPaths) {
-          NSError* error = nil;
-          NSData* data = [NSData dataWithContentsOfFile:flatBufferPath  options:0 error:&error];
-          WiseInventServerApi_MobileClient_FlatBuffer_ModelSchema* schema = [WiseInventServerApi_MobileClient_FlatBuffer_ModelSchema getRootAsModelSchema:data];
+          //NSError* error = nil;
+          //NSData* data = [NSData dataWithContentsOfFile:flatBufferPath  options:0 error:&error];
+            NSArray* arr = [UtilityMethods byteArraysWithPath: flatBufferPath];
 
-          for(int i = 0; i < [schema FramesCount]; i++) {
-            WiseInventServerApi_MobileClient_FlatBuffer_ModelFrame* frame = [schema Frames index:i ];
-            [cacheDict setObject:[NSData dataWithBytes:[frame Image]] forKey:[NSNumber numberWithInteger:index]];
-
+          for(int i = 0; i < [arr count]; i++) {
+            [cacheDict setObject:arr[i] forKey:[NSNumber numberWithInteger:index]];
+              index = index + 1;
           }
 
           /*for(WiseInventServerApi_MobileClient_FlatBuffer_ModelFrame* frame in schema.Frames) {
