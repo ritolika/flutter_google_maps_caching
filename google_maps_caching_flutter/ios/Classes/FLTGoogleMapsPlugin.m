@@ -58,15 +58,15 @@
       } else if([call.method isEqualToString:@"map#setCachedBitmapsFromFlatBufferPaths"]) {
         NSArray* flatBufferPaths = call.arguments[@"flatBufferPaths"];
         int index = 0;
-        NSMutableDictionary* cacheDict = [NSMutableDictionary new];
+        //NSMutableDictionary* cacheDict = [NSMutableDictionary new];
         for(NSString* flatBufferPath in flatBufferPaths) {
           //NSError* error = nil;
           //NSData* data = [NSData dataWithContentsOfFile:flatBufferPath  options:0 error:&error];
             NSArray* arr = [UtilityMethods byteArraysWithPath: flatBufferPath];
 
           for(int i = 0; i < [arr count]; i++) {
-            [cacheDict setObject:arr[i] forKey:[NSNumber numberWithInteger:index]];
-              index = index + 1;
+            [[FLTGoogleMapsCache cache] setObject:arr[i] forKey:[NSNumber numberWithInteger:index]];              
+            index = index + 1;
           }
 
           /*for(WiseInventServerApi_MobileClient_FlatBuffer_ModelFrame* frame in schema.Frames) {
@@ -81,7 +81,7 @@
             index = index + 1;
           }*/
         }
-        [FLTGoogleMapsCache setCache:cacheDict];
+        //[FLTGoogleMapsCache setCache:cacheDict];
         NSLog(@"[GoogleMapsFlutterCaching] %lu bitmaps indexed.", FLTGoogleMapsCache.cache.count);
         result(@[ @(YES) ]);
       } else {
