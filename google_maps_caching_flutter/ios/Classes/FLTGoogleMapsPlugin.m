@@ -59,13 +59,15 @@
         NSArray* flatBufferPaths = call.arguments[@"flatBufferPaths"];
         int index = 0;
         //NSMutableDictionary* cacheDict = [NSMutableDictionary new];
+        FLTGoogleMapsCache.cache = [[NSMutableDictionary alloc] init];
+        CGFloat screenScale = [[UIScreen mainScreen] scale];
         for(NSString* flatBufferPath in flatBufferPaths) {
           //NSError* error = nil;
           //NSData* data = [NSData dataWithContentsOfFile:flatBufferPath  options:0 error:&error];
             NSArray* arr = [UtilityMethods byteArraysWithPath: flatBufferPath];
 
           for(int i = 0; i < [arr count]; i++) {
-            [[FLTGoogleMapsCache cache] setObject:arr[i] forKey:[NSNumber numberWithInteger:index]];              
+            [[FLTGoogleMapsCache cache] setObject:[UIImage imageWithData:arr[i] scale:screenScale] forKey:[NSNumber numberWithInteger:index]];
             index = index + 1;
           }
 
