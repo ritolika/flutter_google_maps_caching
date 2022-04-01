@@ -32,6 +32,8 @@ import java.util.Map.Entry;
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 
+import com.google.flatbuffers.FlatBufferBuilder;
+
 /**
  * Plugin for controlling a set of GoogleMap views to be shown as overlays on
  * top of the Flutter view. The overlay should be hidden during transformations
@@ -112,6 +114,32 @@ public class GoogleMapsPlugin implements FlutterPlugin, ActivityAware {
           }).start();
 
           
+        } else if(methodCall.equals("map#setCachedBitmapsFromFlatBufferPaths")) {
+          List<String> paths = mehtodCall.argument("flatBufferPaths");
+          int index = 0;
+
+          for(String path : paths) {
+
+            File flatBufferFile = new File(path);
+            RandomAccessFile file = new RandomAccessFile(flatBufferFile);
+            byte[] data = new byte[(int)file.length()];
+            file.readFully(data);
+            file.close();
+
+            ByteBuffer bb = ByteBuffer.wrap(data);
+            ModelSchema schema = ModelSchema.getRootAsModelSchema(bb);
+            for(int i = 0; i < schema.FramesLength(); i++) {
+              byte[] byteArray = new byte[schema.Frame(i).FrameLength()];
+              for(int j = 0; j < schema.Frame(i).FrameLength(); j++) {
+                byteArray[j] = schema.Frame(i).Frame(j);
+              }
+              Bitmap bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+              CACHED_BITMAPS.put(index, BitmapDescriptorFactory.fromBitmap(bitmap));
+              index++;
+            }
+          }
+          Log.i("GoogleMapsFlutterCaching", CACHED_BITMAPS.size() + " bitmaps indexed.");
+          result.success(null);
         }
       }
 
