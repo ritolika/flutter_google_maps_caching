@@ -19,11 +19,11 @@ public final class ModelSchema extends Table {
   public int NamesLength() { int o = __offset(4); return o != 0 ? __vector_len(o) : 0; }
   public StringVector NamesVector() { return NamesVector(new StringVector()); }
   public StringVector NamesVector(StringVector obj) { int o = __offset(4); return o != 0 ? obj.__assign(__vector(o), 4, bb) : null; }
-  public WiseInventServerApi.MobileClient.FlatBuffer.ModelFrame Frames(int j) { return Frames(new WiseInventServerApi.MobileClient.FlatBuffer.ModelFrame(), j); }
-  public WiseInventServerApi.MobileClient.FlatBuffer.ModelFrame Frames(WiseInventServerApi.MobileClient.FlatBuffer.ModelFrame obj, int j) { int o = __offset(6); return o != 0 ? obj.__assign(__indirect(__vector(o) + j * 4), bb) : null; }
+  public ModelFrame Frames(int j) { return Frames(new ModelFrame(), j); }
+  public ModelFrame Frames(ModelFrame obj, int j) { int o = __offset(6); return o != 0 ? obj.__assign(__indirect(__vector(o) + j * 4), bb) : null; }
   public int FramesLength() { int o = __offset(6); return o != 0 ? __vector_len(o) : 0; }
-  public WiseInventServerApi.MobileClient.FlatBuffer.ModelFrame.Vector FramesVector() { return FramesVector(new WiseInventServerApi.MobileClient.FlatBuffer.ModelFrame.Vector()); }
-  public WiseInventServerApi.MobileClient.FlatBuffer.ModelFrame.Vector FramesVector(WiseInventServerApi.MobileClient.FlatBuffer.ModelFrame.Vector obj) { int o = __offset(6); return o != 0 ? obj.__assign(__vector(o), 4, bb) : null; }
+  public ModelFrame.Vector FramesVector() { return FramesVector(new ModelFrame.Vector()); }
+  public ModelFrame.Vector FramesVector(ModelFrame.Vector obj) { int o = __offset(6); return o != 0 ? obj.__assign(__vector(o), 4, bb) : null; }
 
   public static int createModelSchema(FlatBufferBuilder builder,
       int NamesOffset,

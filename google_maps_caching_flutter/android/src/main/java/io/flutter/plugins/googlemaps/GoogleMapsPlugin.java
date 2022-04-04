@@ -29,6 +29,10 @@ import io.flutter.plugin.common.MethodChannel.Result;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
+import java.io;
+
+import com.google.flatbuffers.*;
+
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 
@@ -115,7 +119,7 @@ public class GoogleMapsPlugin implements FlutterPlugin, ActivityAware {
 
           
         } else if(methodCall.equals("map#setCachedBitmapsFromFlatBufferPaths")) {
-          List<String> paths = mehtodCall.argument("flatBufferPaths");
+          List<String> paths = methodCall.argument("flatBufferPaths");
           int index = 0;
 
           for(String path : paths) {
