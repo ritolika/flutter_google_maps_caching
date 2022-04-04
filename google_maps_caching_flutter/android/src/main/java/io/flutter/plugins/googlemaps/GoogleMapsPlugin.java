@@ -143,10 +143,10 @@ public class GoogleMapsPlugin implements FlutterPlugin, ActivityAware {
               Log.i("GoogleMapsFlutterCaching", "ModelSchema created for " + path);
               for(int i = 0; i < schema.FramesLength(); i++) {
                 ModelFrame frame = schema.Frames(i);
-                byte[] byteArray = new byte[frame.FrameLength()];
-                for(int j = 0; j < frame.FrameLength(); j++) {
+                byte[] byteArray = frame.FrameAsByteBuffer().array();
+                /*for(int j = 0; j < frame.FrameLength(); j++) {
                   byteArray[j] = frame.Frame(j);
-                }
+                }*/
                 Bitmap bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
                 CACHED_BITMAPS.put(index, BitmapDescriptorFactory.fromBitmap(bitmap));
                 index++;
