@@ -129,7 +129,7 @@ public class GoogleMapsPlugin implements FlutterPlugin, ActivityAware {
           for(String path : paths) {
 
             File flatBufferFile = new File(path);
-            RandomAccessFile file = new RandomAccessFile(flatBufferFile);
+            RandomAccessFile file = new RandomAccessFile(flatBufferFile, "r");
             byte[] data = new byte[(int)file.length()];
             file.readFully(data);
             file.close();
@@ -137,9 +137,9 @@ public class GoogleMapsPlugin implements FlutterPlugin, ActivityAware {
             ByteBuffer bb = ByteBuffer.wrap(data);
             ModelSchema schema = ModelSchema.getRootAsModelSchema(bb);
             for(int i = 0; i < schema.FramesLength(); i++) {
-              byte[] byteArray = new byte[schema.Frame(i).FrameLength()];
-              for(int j = 0; j < schema.Frame(i).FrameLength(); j++) {
-                byteArray[j] = schema.Frame(i).Frame(j);
+              byte[] byteArray = new byte[schema.Frames(i).FrameLength()];
+              for(int j = 0; j < schema.Frames(i).FrameLength(); j++) {
+                byteArray[j] = schema.Frames(i).Frame(j);
               }
               Bitmap bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
               CACHED_BITMAPS.put(index, BitmapDescriptorFactory.fromBitmap(bitmap));
