@@ -178,6 +178,7 @@ public class GoogleMapsPlugin implements FlutterPlugin, ActivityAware {
                 index++;
               }*/
             } catch(IOException e) {
+              e.printStackTrace();
               Log.e("GoogleMapsFlutterCaching", "Error reading file: " + path);
             }
             
