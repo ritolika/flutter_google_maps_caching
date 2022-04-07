@@ -135,24 +135,20 @@ public class GoogleMapsPlugin implements FlutterPlugin, ActivityAware {
 
               //create object input stream for flatBufferFile
               FileInputStream fis = new FileInputStream(path);
-              ObjectInputStream ois = new ObjectInputStream(fis);
 
-              //while there is still data to read from objectinputstream
-              int frameLength;
-              byte[] frame;
-              Bitmap bitmap;
-              while(ois.available() > 0) {
-                frameLength = ois.readInt();
-                //read frameLength bytes from objectinputstream
-                frame = new byte[frameLength];
-                ois.read(frame);
-                //create bitmap from frame
-                bitmap = BitmapFactory.decodeByteArray(frame, 0, frame.length);
-                //add bitmap to cache
+              byte[] sizeBuffer = new byte[4];
+              byte[] buffer;
+
+              while(fis.available() > 0) {
+                //read bytes to sizeBuffer
+                fis.read(sizeBuffer);
+                //convert sizeBuffer to int
+                buffer = new byte[ByteBuffer.wrap(sizeBuffer).getInt()];
+                fis.read(buffer);
+                Bitmap bitmap = BitmapFactory.decodeByteArray(buffer, 0, buffer.length);
                 CACHED_BITMAPS.put(index, BitmapDescriptorFactory.fromBitmap(bitmap));
                 index++;
               }
-
 
               /*RandomAccessFile file = new RandomAccessFile(flatBufferFile, "r");
               Log.i("GoogleMapsFlutterCaching", "Reading file " + path);
