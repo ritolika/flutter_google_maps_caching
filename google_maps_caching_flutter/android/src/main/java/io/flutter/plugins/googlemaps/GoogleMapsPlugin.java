@@ -129,8 +129,32 @@ public class GoogleMapsPlugin implements FlutterPlugin, ActivityAware {
           for(String path : paths) {
 
             try {
+              Log.i("GoogleMapsFlutterCaching", "Reading file " + path);
+
               File flatBufferFile = new File(path);
-              RandomAccessFile file = new RandomAccessFile(flatBufferFile, "r");
+
+              //create object input stream for flatBufferFile
+              FileInputStream fis = new FileInputStream(path);
+              ObjectInputStream ois = new ObjectInputStream(fis);
+
+              //while there is still data to read from objectinputstream
+              int frameLength;
+              byte[] frame;
+              Bitmap bitmap;
+              while(ois.available() > 0) {
+                frameLength = ois.readInt();
+                //read frameLength bytes from objectinputstream
+                frame = new byte[frameLength];
+                ois.read(frame);
+                //create bitmap from frame
+                bitmap = BitmapFactory.decodeByteArray(frame, 0, frame.length);
+                //add bitmap to cache
+                CACHED_BITMAPS.put(index, BitmapDescriptorFactory.fromBitmap(bitmap));
+                index++;
+              }
+
+
+              /*RandomAccessFile file = new RandomAccessFile(flatBufferFile, "r");
               Log.i("GoogleMapsFlutterCaching", "Reading file " + path);
               byte[] data = new byte[(int)file.length()];
               file.readFully(data);
@@ -152,7 +176,7 @@ public class GoogleMapsPlugin implements FlutterPlugin, ActivityAware {
                 Bitmap bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
                 CACHED_BITMAPS.put(index, BitmapDescriptorFactory.fromBitmap(bitmap));
                 index++;
-              }
+              }*/
             } catch(IOException e) {
               Log.e("GoogleMapsFlutterCaching", "Error reading file: " + path);
             }
