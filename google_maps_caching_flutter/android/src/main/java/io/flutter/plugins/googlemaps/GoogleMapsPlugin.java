@@ -37,6 +37,7 @@ import com.google.flatbuffers.*;
 
 import java.nio.ByteBuffer;
 import java.nio.file.Files;
+import java.nio.file.Paths;
 
 import com.google.android.gms.maps.model.BitmapDescriptor;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
@@ -135,7 +136,7 @@ public class GoogleMapsPlugin implements FlutterPlugin, ActivityAware {
               //File flatBufferFile = new File(path);
 
               //read all bytes from file
-              byte[] flatBufferBytes = Files.readAllBytes(path);
+              byte[] flatBufferBytes = Files.readAllBytes(Paths.get(path));
 
               ByteBuffer byteBuffer = ByteBuffer.wrap(flatBufferBytes);
 
