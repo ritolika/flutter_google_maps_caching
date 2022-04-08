@@ -137,7 +137,7 @@ public class GoogleMapsPlugin implements FlutterPlugin, ActivityAware {
               //File flatBufferFile = new File(path);
 
               //read all bytes from file
-              byte[] flatBufferBytes = Files.readAllBytes(Paths.get(path));
+              /*byte[] flatBufferBytes = Files.readAllBytes(Paths.get(path));
 
               ByteBuffer byteBuffer = ByteBuffer.wrap(flatBufferBytes);
               byteBuffer.order(ByteOrder.LITTLE_ENDIAN);
@@ -151,9 +151,9 @@ public class GoogleMapsPlugin implements FlutterPlugin, ActivityAware {
                 CACHED_BITMAPS.put(index, BitmapDescriptorFactory.fromBitmap(nextBitmap));
                 index++;
                 i += nextSize;
-              }
+              }*/
 
-              /*RandomAccessFile file = new RandomAccessFile(flatBufferFile, "r");
+              RandomAccessFile file = new RandomAccessFile(flatBufferFile, "r");
               Log.i("GoogleMapsFlutterCaching", "Reading file " + path);
               byte[] data = new byte[(int)file.length()];
               file.readFully(data);
@@ -165,17 +165,17 @@ public class GoogleMapsPlugin implements FlutterPlugin, ActivityAware {
               ModelSchema schema = ModelSchema.getRootAsModelSchema(bb);
               Log.i("GoogleMapsFlutterCaching", "ModelSchema created for " + path);
               ModelFrame frame;
+              ByteBuffer byteBuffer;
               byte[] byteArray;
+
               for(int i = 0; i < schema.FramesLength(); i++) {
                 frame = schema.Frames(i);
-                byteArray = new byte[frame.FrameLength()];
-                for(int j = 0; j < frame.FrameLength(); j++) {
-                  byteArray[j] = frame.Frame(j);
-                }
-                Bitmap bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
+                byteBuffer = frame.FrameAsByteBuffer();
+                byteArray = byteBuffer.array();
+                Bitmap bitmap = BitmapFactory.decodeByteArray(byteArray, byteBuffer.position(), byteBuffer.limit());
                 CACHED_BITMAPS.put(index, BitmapDescriptorFactory.fromBitmap(bitmap));
                 index++;
-              }*/
+              }
             } catch(IOException e) {
               e.printStackTrace();
               Log.e("GoogleMapsFlutterCaching", "Error reading file: " + path);
