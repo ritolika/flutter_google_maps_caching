@@ -134,7 +134,7 @@ public class GoogleMapsPlugin implements FlutterPlugin, ActivityAware {
             try {
               Log.i("GoogleMapsFlutterCaching", "Reading file " + path);
 
-              //File flatBufferFile = new File(path);
+              File flatBufferFile = new File(path);
 
               //read all bytes from file
               /*byte[] flatBufferBytes = Files.readAllBytes(Paths.get(path));
