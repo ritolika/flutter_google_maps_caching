@@ -172,7 +172,7 @@ public class GoogleMapsPlugin implements FlutterPlugin, ActivityAware {
                 frame = schema.Frames(i);
                 byteBuffer = frame.FrameAsByteBuffer();
                 byteArray = byteBuffer.array();
-                Bitmap bitmap = BitmapFactory.decodeByteArray(byteArray, byteBuffer.position(), byteBuffer.limit());
+                Bitmap bitmap = BitmapFactory.decodeByteArray(byteArray, byteBuffer.position(), byteBuffer.limit() - byteBuffer.position());
                 CACHED_BITMAPS.put(index, BitmapDescriptorFactory.fromBitmap(bitmap));
                 index++;
               }
