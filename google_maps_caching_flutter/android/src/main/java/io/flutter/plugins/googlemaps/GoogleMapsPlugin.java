@@ -139,7 +139,7 @@ public class GoogleMapsPlugin implements FlutterPlugin, ActivityAware {
               byte[] flatBufferBytes = Files.readAllBytes(Paths.get(path));
 
               ByteBuffer byteBuffer = ByteBuffer.wrap(flatBufferBytes);
-
+              byteBuffer.order(ByteOrder.LITTLE_ENDIAN);
               int i = 0;
               int nextSize;
               Bitmap nextBitmap;
