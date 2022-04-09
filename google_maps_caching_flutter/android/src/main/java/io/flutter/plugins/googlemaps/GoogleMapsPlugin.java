@@ -127,7 +127,7 @@ public class GoogleMapsPlugin implements FlutterPlugin, ActivityAware {
           
         } else if(methodCall.method.equals("map#setCachedBitmapsFromFlatBufferPaths")) {
           List<String> paths = methodCall.argument("flatBufferPaths");
-          int index = 0;
+          int index = CACHED_BITMAPS.size();
 
           for(String path : paths) {
 
