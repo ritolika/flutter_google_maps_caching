@@ -57,9 +57,11 @@
         result(@[ @(YES) ]);
       } else if([call.method isEqualToString:@"map#setCachedBitmapsFromFlatBufferPaths"]) {
         NSArray* flatBufferPaths = call.arguments[@"flatBufferPaths"];
-        int index = 0;
+        if(FLTGoogleMapsCache.cache == nil) {
+          FLTGoogleMapsCache.cache = [[NSMutableDictionary alloc] init];
+        }
+        int index = [FLTGoogleMapsCache.cache count];
         //NSMutableDictionary* cacheDict = [NSMutableDictionary new];
-        FLTGoogleMapsCache.cache = [[NSMutableDictionary alloc] init];
         CGFloat screenScale = [[UIScreen mainScreen] scale];
         for(NSString* flatBufferPath in flatBufferPaths) {
           //NSError* error = nil;
